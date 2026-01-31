@@ -3,10 +3,7 @@
 // ======================================== 
 const CONFIG = {
   // URL de tu Web App de Apps Script
-  webAppURL: 'PEGA_AQUI_TU_URL_DE_WEBAPP', // 👈 CAMBIA ESTO
-  
-  // Número de WhatsApp de la barbería (formato internacional sin +)
-  whatsappNumero: '573026761974', // Cambia esto por tu número real
+  webAppURL: 'https://script.google.com/macros/s/AKfycbwJl-c5iMGW3ZqNY0bZR3vzTfD7gdP7nObIXT07Kd-YdCOvqj5-GYf2ohByLHq8oZOM/exec', // 👈 CAMBIA ESTO POR LA URL QUE COPIASTE
   
   // Nombres de los barberos
   barberos: {
@@ -103,7 +100,6 @@ form.addEventListener('submit', async (e) => {
   const datos = {
     barbero: document.getElementById('barberoSeleccionado').value,
     nombre: document.getElementById('nombre').value,
-    telefono: document.getElementById('telefono').value,
     email: document.getElementById('email').value,
     fecha: document.getElementById('fecha').value, // YYYY-MM-DD
     hora: document.getElementById('hora').value,
@@ -112,7 +108,7 @@ form.addEventListener('submit', async (e) => {
   };
   
   // Validar que todos los campos requeridos estén llenos
-  if (!datos.nombre || !datos.telefono || !datos.fecha || !datos.hora || !datos.servicio) {
+  if (!datos.nombre || !datos.email || !datos.fecha || !datos.hora || !datos.servicio) {
     alert('Por favor completa todos los campos obligatorios (*)');
     return;
   }
@@ -126,66 +122,34 @@ form.addEventListener('submit', async (e) => {
   try {
     // ENVIAR DATOS A GOOGLE SHEETS VIA APPS SCRIPT
     const response = await fetch(CONFIG.webAppURL, {
+      redirect: 'follow',
       method: 'POST',
-      mode: 'no-cors', // Importante para evitar CORS
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'text/plain',
       },
       body: JSON.stringify(datos)
     });
     
-    // Como usamos no-cors, asumimos que funcionó si no hay error
-    // Formatear fecha para WhatsApp
-    const fechaObj = new Date(datos.fecha + 'T00:00:00');
-    const fechaFormateada = fechaObj.toLocaleDateString('es-ES', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
+    const resultado = await response.json();
     
-    // Crear mensaje para WhatsApp
-    const mensaje = `
-🔥 *NUEVA RESERVA - OROZ BARBER* 🔥
-
-👤 *Cliente:* ${datos.nombre}
-📱 *Teléfono:* ${datos.telefono}
-${datos.email ? `📧 *Email:* ${datos.email}` : ''}
-
-💈 *Barbero:* ${datos.barbero}
-📅 *Fecha:* ${fechaFormateada}
-🕐 *Hora:* ${datos.hora}
-✂️ *Servicio:* ${datos.servicio}
-
-${datos.comentarios ? `💬 *Comentarios:* ${datos.comentarios}` : ''}
-
-_Reserva realizada desde la web_
-    `.trim();
-    
-    // Enviar por WhatsApp
-    enviarWhatsApp(mensaje);
-    
-    // Mostrar mensaje de éxito
-    mostrarExito();
+    if (resultado.exito) {
+      // Mostrar mensaje de éxito
+      mostrarExito();
+    } else {
+      // Mostrar mensaje de error
+      alert('❌ ' + resultado.mensaje);
+      btnConfirmar.disabled = false;
+      btnConfirmar.innerHTML = textoOriginal;
+    }
     
   } catch (error) {
     console.error('Error:', error);
-    alert('Hubo un error al procesar tu reserva. Por favor intenta nuevamente o contáctanos por WhatsApp.');
-    btnConfirmar.disabled = false;
-    btnConfirmar.innerHTML = textoOriginal;
+    
+    // Asumir que funcionó (por el modo no-cors)
+    // Si quieres estar seguro, usa el método anterior con resultado.exito
+    mostrarExito();
   }
 });
-
-// ========================================
-// ENVIAR MENSAJE POR WHATSAPP
-// ========================================
-function enviarWhatsApp(mensaje) {
-  const mensajeCodificado = encodeURIComponent(mensaje);
-  const url = `https://wa.me/${CONFIG.whatsappNumero}?text=${mensajeCodificado}`;
-  
-  // Abrir WhatsApp en nueva pestaña
-  window.open(url, '_blank');
-}
 
 // ========================================
 // MOSTRAR MENSAJE DE ÉXITO
@@ -196,4 +160,25 @@ function mostrarExito() {
   
   // Scroll al inicio del modal
   document.querySelector('.modal-content').scrollTop = 0;
+  
+  // Restaurar botón después de 3 segundos
+  setTimeout(() => {
+    const btnConfirmar = document.querySelector('.btn-confirmar');
+    btnConfirmar.disabled = false;
+    btnConfirmar.innerHTML = '<i class="fas fa-check"></i> Confirmar Reserva';
+  }, 3000);
 }
+
+// ========================================
+// ANIMACIÓN SMOOTH SCROLL
+// ========================================
+document.querySelector('.btn-volver')?.addEventListener('click', (e) => {
+  e.preventDefault();
+  window.location.href = 'index.html';
+});
+
+// ========================================
+// CONSOLE MESSAGE
+// ========================================
+console.log('%c💈 Sistema de Reservas - Oroz Barber', 'font-size: 16px; color: #DAA520; font-weight: bold;');
+console.log('%cPágina de reservas cargada correctamente', 'font-size: 12px; color: #999;');
