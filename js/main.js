@@ -152,3 +152,16 @@ document.addEventListener('DOMContentLoaded', () => {
 // ========================================
 console.log('%c🔥 OROZ BARBER 🔥', 'font-size: 20px; color: #DAA520; font-weight: bold;');
 console.log('%cEstilo, Precisión y Actitud', 'font-size: 14px; color: #999; font-style: italic;');
+
+// ========================================
+// SIMULAR HOVER EN MÓVIL (SERVICIOS)
+// ========================================
+document.querySelectorAll('.servicio-card').forEach(card => {
+  card.addEventListener('touchstart', () => {
+    document
+      .querySelectorAll('.servicio-card.active')
+      .forEach(c => c.classList.remove('active'));
+
+    card.classList.add('active');
+  });
+});
