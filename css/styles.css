@@ -212,6 +212,7 @@ body {
 .icono-mouse {
   margin-top: 40px;
   animation: floatDown 3s ease-in-out infinite;
+  display: block;
 }
 
 .icono-mouse svg {
