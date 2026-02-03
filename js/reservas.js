@@ -3,13 +3,13 @@
 // ======================================== 
 const CONFIG = {
   // URL de tu Web App de Apps Script
-  webAppURL: 'https://script.google.com/macros/s/AKfycbwJl-c5iMGW3ZqNY0bZR3vzTfD7gdP7nObIXT07Kd-YdCOvqj5-GYf2ohByLHq8oZOM/exec', // 👈 CAMBIA ESTO POR LA URL QUE COPIASTE
+  webAppURL: 'https://script.google.com/macros/s/AKfycbwJl-c5iMGW3ZqNY0bZR3vzTfD7gdP7nObIXT07Kd-YdCOvqj5-GYf2ohByLHq8oZOM/exec', 
   
   // Nombres de los barberos
   barberos: {
     barbero1: 'Felipe Orozco',
-    barbero2: 'Miguel Ángel',
-    barbero3: 'Andrés López'
+    barbero2: 'Chinga',
+    barbero3: 'Checho'
   }
 };
 

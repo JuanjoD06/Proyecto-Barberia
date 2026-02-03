@@ -31,6 +31,33 @@
     </div>
   </header>
 
+
+  <!-- Información adicional -->
+      <div class="info-reservas">
+        <div class="info-card-reserva">
+          <i class="fas fa-clock"></i>
+          <h4>Horario de atención</h4>
+          <p>Lunes a Sábado: 9:00 AM - 6:00 PM</p>
+          <p class="nota">Domingos cerrado</p>
+        </div>
+        
+        <div class="info-card-reserva">
+          <i class="fas fa-info-circle"></i>
+          <h4>Importante</h4>
+          <p>Debes agendar con mínimo <strong>3 horas</strong> de anticipación</p>
+          <p class="nota">Cancelaciones hasta 1 hora antes</p>
+        </div>
+        
+        <div class="info-card-reserva">
+          <i class="fas fa-envelope"></i>
+          <h4>Confirmación</h4>
+          <p>Recibirás un correo de confirmación</p>
+          <p class="nota">Revisa tu bandeja de entrada</p>
+        </div>
+      </div>
+
+    </div>
+
   <!-- Sección de Barberos -->
   <section class="barberos-section">
     <div class="container">
@@ -47,7 +74,7 @@
             </div>
           </div>
           <div class="barbero-info">
-            <h3 class="barbero-nombre">Carlos Rodríguez</h3>
+            <h3 class="barbero-nombre">Felipe orozco</h3>
             <p class="barbero-titulo">Barbero Senior</p>
             <div class="barbero-stats">
               <div class="stat-item">
@@ -65,14 +92,14 @@
         <!-- Barbero 2 -->
         <div class="barbero-card" data-barbero="barbero2">
           <div class="barbero-imagen">
-            <img src="assets/images/barbero2.jpg" alt="Miguel Ángel">
+            <img src="assets/images/barbero1.jpg" alt="Miguel Ángel">
             <div class="barbero-overlay">
               <i class="fas fa-calendar-check"></i>
               <p>Click para reservar</p>
             </div>
           </div>
           <div class="barbero-info">
-            <h3 class="barbero-nombre">Miguel Ángel</h3>
+            <h3 class="barbero-nombre">chinga</h3>
             <p class="barbero-titulo">Barbero Profesional</p>
             <div class="barbero-stats">
               <div class="stat-item">
@@ -90,15 +117,15 @@
         <!-- Barbero 3 -->
         <div class="barbero-card" data-barbero="barbero3">
           <div class="barbero-imagen">
-            <img src="assets/images/barbero3.jpg" alt="Andrés López">
+            <img src="assets/images/barbero1.jpg" alt="Andrés López">
             <div class="barbero-overlay">
               <i class="fas fa-calendar-check"></i>
               <p>Click para reservar</p>
             </div>
           </div>
           <div class="barbero-info">
-            <h3 class="barbero-nombre">Andrés López</h3>
-            <p class="barbero-titulo">Barbero Estilista</p>
+            <h3 class="barbero-nombre">Checho</h3>
+            <p class="barbero-titulo">Barbero Profesional</p>
             <div class="barbero-stats">
               <div class="stat-item">
                 <i class="fas fa-star"></i>
@@ -184,11 +211,11 @@
               <label for="servicio">Servicio *</label>
               <select id="servicio" name="servicio" required>
                 <option value="">Selecciona un servicio</option>
-                <option value="Corte sencillo - $22.000">Corte sencillo - $22.000</option>
-                <option value="Limpieza Facial - $25.000">Limpieza Facial - $25.000</option>
-                <option value="Corte premium - $40.000">Corte premium - $40.000</option>
-                <option value="Corte con barba - $25.000">Corte con barba - $25.000</option>
-                <option value="Barba - $7.000">Barba - $7.000</option>
+                <option value="Corte sencillo 💇🏻‍♂️ - $22.000">Corte sencillo - $22.000</option>
+                <option value="Limpieza Facial 💆🏻 - $25.000">Limpieza Facial - $25.000</option>
+                <option value="Corte premium ⭐️ - $40.000">Corte premium - $40.000</option>
+                <option value="Corte con barba 🧔🏻‍♂️ - $25.000">Corte con barba - $25.000</option>
+                <option value="Barba 🧔🏻‍♂️ - $7.000">Barba - $7.000</option>
               </select>
             </div>
           </div>
@@ -215,12 +242,15 @@
       <div id="mensajeExito" class="mensaje-exito" style="display: none;">
         <i class="fas fa-check-circle"></i>
         <h3>¡Reserva Confirmada!</h3>
-        <p>Te hemos enviado un mensaje de confirmación por WhatsApp</p>
+        <p>Te hemos enviado un mensaje de confirmación por correo electrónico</p>
         <button class="btn-cerrar-exito" onclick="cerrarModal()">Cerrar</button>
       </div>
 
     </div>
   </div>
+
+
+  </section>
 
   <!-- JavaScript -->
   <script src="js/reservas.js"></script>
