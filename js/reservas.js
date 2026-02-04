@@ -3,13 +3,13 @@
 // ======================================== 
 const CONFIG = {
   // URL de tu Web App de Apps Script
-  webAppURL: 'https://script.google.com/macros/s/AKfycbwJl-c5iMGW3ZqNY0bZR3vzTfD7gdP7nObIXT07Kd-YdCOvqj5-GYf2ohByLHq8oZOM/exec', 
+  webAppURL: 'https://script.google.com/macros/s/AKfycbwJl-c5iMGW3ZqNY0bZR3vzTfD7gdP7nObIXT07Kd-YdCOvqj5-GYf2ohByLHq8oZOM/exec',
   
   // Nombres de los barberos
   barberos: {
     barbero1: 'Felipe Orozco',
-    barbero2: 'Chinga',
-    barbero3: 'Checho'
+    barbero2: 'Tomas Orozco',
+    barbero3: 'Sergio Jiménez'
   }
 };
 
@@ -20,6 +20,8 @@ const modal = document.getElementById('reservaModal');
 const form = document.getElementById('reservaForm');
 const mensajeExito = document.getElementById('mensajeExito');
 let barberoActual = '';
+let servicioActual = '';
+let fechaActual = '';
 
 // ========================================
 // CONFIGURAR FECHA MÍNIMA (HOY)
@@ -35,7 +37,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (fecha.getDay() === 0) { // 0 = Domingo
       alert('Lo sentimos, no trabajamos los domingos. Por favor selecciona otro día.');
       e.target.value = '';
+    } else {
+      fechaActual = e.target.value;
+      cargarHorasDisponibles(); // Actualizar horas cuando cambia la fecha
     }
+  });
+  
+  // Actualizar horas cuando cambia el servicio
+  const selectServicio = document.getElementById('servicio');
+  selectServicio.addEventListener('change', (e) => {
+    servicioActual = e.target.value;
+    cargarHorasDisponibles(); // Actualizar horas según duración del servicio
   });
 });
 
@@ -61,6 +73,91 @@ function abrirModal(barbero) {
   form.reset();
   form.style.display = 'block';
   mensajeExito.style.display = 'none';
+  
+  // Resetear horas disponibles
+  mostrarMensajeHoras('Selecciona un servicio y una fecha para ver las horas disponibles');
+}
+
+// ========================================
+// CARGAR HORAS DISPONIBLES DINÁMICAMENTE
+// ========================================
+async function cargarHorasDisponibles() {
+  // Validar que estén seleccionados servicio y fecha
+  if (!servicioActual || !fechaActual || !barberoActual) {
+    return;
+  }
+  
+  const contenedorHoras = document.getElementById('horasDisponibles');
+  mostrarCargando();
+  
+  try {
+    // Llamar a Apps Script para obtener horas disponibles
+    const response = await fetch(`${CONFIG.webAppURL}?action=obtenerHoras&barbero=${encodeURIComponent(CONFIG.barberos[barberoActual])}&fecha=${fechaActual}&servicio=${encodeURIComponent(servicioActual)}`);
+    
+    const resultado = await response.json();
+    
+    if (resultado.exito && resultado.horas.length > 0) {
+      mostrarHoras(resultado.horas);
+    } else {
+      mostrarMensajeHoras('❌ No hay horarios disponibles para esta fecha y servicio');
+    }
+    
+  } catch (error) {
+    console.error('Error al cargar horas:', error);
+    mostrarMensajeHoras('⚠️ Error al cargar horarios. Por favor intenta nuevamente.');
+  }
+}
+
+function mostrarCargando() {
+  const contenedorHoras = document.getElementById('horasDisponibles');
+  contenedorHoras.innerHTML = `
+    <div class="loading-horas">
+      <i class="fas fa-spinner fa-spin"></i>
+      <p>Cargando horarios disponibles...</p>
+    </div>
+  `;
+}
+
+function mostrarMensajeHoras(mensaje) {
+  const contenedorHoras = document.getElementById('horasDisponibles');
+  contenedorHoras.innerHTML = `
+    <div class="loading-horas">
+      <p>${mensaje}</p>
+    </div>
+  `;
+}
+
+function mostrarHoras(horas) {
+  const contenedorHoras = document.getElementById('horasDisponibles');
+  contenedorHoras.innerHTML = '';
+  
+  const grid = document.createElement('div');
+  grid.className = 'horas-grid';
+  
+  horas.forEach(hora => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'hora-btn';
+    btn.textContent = hora;
+    btn.onclick = () => seleccionarHora(hora, btn);
+    grid.appendChild(btn);
+  });
+  
+  contenedorHoras.appendChild(grid);
+}
+
+function seleccionarHora(hora, btn) {
+  // Remover selección anterior
+  document.querySelectorAll('.hora-btn').forEach(b => b.classList.remove('selected'));
+  
+  // Marcar como seleccionado
+  btn.classList.add('selected');
+  
+  // Guardar hora seleccionada
+  document.getElementById('hora').value = hora;
+  
+  // Habilitar botón de confirmar
+  document.querySelector('.btn-confirmar').disabled = false;
 }
 
 // ========================================
@@ -71,6 +168,8 @@ function cerrarModal() {
   document.body.style.overflow = 'auto';
   form.reset();
   mensajeExito.style.display = 'none';
+  servicioActual = '';
+  fechaActual = '';
 }
 
 // Cerrar al hacer click en X
@@ -101,7 +200,7 @@ form.addEventListener('submit', async (e) => {
     barbero: document.getElementById('barberoSeleccionado').value,
     nombre: document.getElementById('nombre').value,
     email: document.getElementById('email').value,
-    fecha: document.getElementById('fecha').value, // YYYY-MM-DD
+    fecha: document.getElementById('fecha').value,
     hora: document.getElementById('hora').value,
     servicio: document.getElementById('servicio').value,
     comentarios: document.getElementById('comentarios').value
@@ -146,7 +245,6 @@ form.addEventListener('submit', async (e) => {
     console.error('Error:', error);
     
     // Asumir que funcionó (por el modo no-cors)
-    // Si quieres estar seguro, usa el método anterior con resultado.exito
     mostrarExito();
   }
 });

@@ -37,7 +37,8 @@
         <div class="info-card-reserva">
           <i class="fas fa-clock"></i>
           <h4>Horario de atención</h4>
-          <p>Lunes a Sábado: 9:00 AM - 6:00 PM</p>
+          <p>Lunes - Jueves: 8:00 AM - 12:00 PM | 2:00 PM - 8:00 PM</p>
+          <p>Viernes - Sábado: 8:00 AM - 12:00 PM | 2:00 PM - 10:00 PM</p>
           <p class="nota">Domingos cerrado</p>
         </div>
         
@@ -83,7 +84,7 @@
               </div>
               <div class="stat-item">
                 <i class="fas fa-scissors"></i>
-                <span>Especialista en fades</span>
+                <span>(Pipe)</span>
               </div>
             </div>
           </div>
@@ -99,7 +100,7 @@
             </div>
           </div>
           <div class="barbero-info">
-            <h3 class="barbero-nombre">chinga</h3>
+            <h3 class="barbero-nombre">Tomas Orozco</h3>
             <p class="barbero-titulo">Barbero Profesional</p>
             <div class="barbero-stats">
               <div class="stat-item">
@@ -108,7 +109,7 @@
               </div>
               <div class="stat-item">
                 <i class="fas fa-scissors"></i>
-                <span>Experto en barba</span>
+                <span>(Chinga)</span>
               </div>
             </div>
           </div>
@@ -124,7 +125,7 @@
             </div>
           </div>
           <div class="barbero-info">
-            <h3 class="barbero-nombre">Checho</h3>
+            <h3 class="barbero-nombre">Sergio Jiménez</h3>
             <p class="barbero-titulo">Barbero Profesional</p>
             <div class="barbero-stats">
               <div class="stat-item">
@@ -133,7 +134,7 @@
               </div>
               <div class="stat-item">
                 <i class="fas fa-scissors"></i>
-                <span>Diseños modernos</span>
+                <span>(Checho)</span>
               </div>
             </div>
           </div>
@@ -181,33 +182,9 @@
         <!-- Detalles de la Cita -->
         <div class="form-section">
           <h3><i class="fas fa-calendar-alt"></i> Detalles de la Cita</h3>
-          
+  
           <div class="form-row">
             <div class="form-group">
-              <label for="fecha">Fecha *</label>
-              <input type="date" id="fecha" name="fecha" required>
-            </div>
-            <div class="form-group">
-              <label for="hora">Hora *</label>
-              <select id="hora" name="hora" required>
-                <option value="">Selecciona una hora</option>
-                <option value="09:00">9:00 AM</option>
-                <option value="10:00">10:00 AM</option>
-                <option value="11:00">11:00 AM</option>
-                <option value="12:00">12:00 PM</option>
-                <option value="13:00">1:00 PM</option>
-                <option value="14:00">2:00 PM</option>
-                <option value="15:00">3:00 PM</option>
-                <option value="16:00">4:00 PM</option>
-                <option value="17:00">5:00 PM</option>
-                <option value="18:00">6:00 PM</option>
-                <option value="19:00">7:00 PM</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group full-width">
               <label for="servicio">Servicio *</label>
               <select id="servicio" name="servicio" required>
                 <option value="">Selecciona un servicio</option>
@@ -218,12 +195,31 @@
                 <option value="Barba 🧔🏻‍♂️ - $7.000">Barba - $7.000</option>
               </select>
             </div>
+            <div class="form-group">
+              <label for="fecha">Fecha *</label>
+              <input type="date" id="fecha" name="fecha" required>
+            </div>
           </div>
 
-          <div class="form-row">
-            <div class="form-group full-width">
-              <label for="comentarios">Comentarios adicionales (opcional)</label>
-              <textarea id="comentarios" name="comentarios" rows="3" placeholder="Algún detalle especial que debamos saber..."></textarea>
+        <!-- CONTENEDOR DE HORAS DISPONIBLES -->
+        <div class="form-row">
+          <div class="form-group full-width">
+            <label>Hora Disponible *</label>
+            <div id="horasDisponibles" class="horas-disponibles">
+              <div class="loading-horas">
+                <p>Selecciona un servicio y una fecha para ver las horas disponibles</p>
+              </div>
+          </div>
+
+        <!-- Campo oculto para guardar la hora seleccionada -->
+        <input type="hidden" id="hora" name="hora" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group full-width">
+        <label for="comentarios">Comentarios adicionales (opcional)</label>
+        <textarea id="comentarios" name="comentarios" rows="3" placeholder="Algún detalle especial que debamos saber..."></textarea>
             </div>
           </div>
         </div>

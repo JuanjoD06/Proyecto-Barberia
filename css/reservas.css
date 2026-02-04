@@ -449,17 +449,86 @@ body {
 }
 
 /* ========================================
-   SELECTOR DE HORAS - BOTONES
+   SELECTOR DE HORAS DISPONIBLES
    ======================================== */
 .horas-disponibles {
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 .horas-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
   gap: 12px;
-  margin-top: 15px;
+  margin-top: 0;
+}
+
+.hora-btn {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: var(--color-gold) !important;
+  border: 2px solid var(--color-gold) !important;
+  padding: 14px 10px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: var(--font-sans);
+  text-align: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.hora-btn:hover {
+  background: rgba(218, 165, 32, 0.15) !important;
+  border-color: #FFD700 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(218, 165, 32, 0.3);
+}
+
+.hora-btn.selected {
+  background: var(--color-gold) !important;
+  color: var(--color-darker) !important;
+  border-color: var(--color-gold) !important;
+  font-weight: 700;
+  transform: scale(1.05);
+  box-shadow: 0 5px 20px rgba(218, 165, 32, 0.5);
+}
+
+.hora-btn:active {
+  transform: scale(0.98);
+}
+
+.loading-horas {
+  text-align: center;
+  padding: 30px 20px;
+  color: var(--color-text-light);
+  font-style: italic;
+}
+
+.loading-horas i {
+  font-size: 24px;
+  color: var(--color-gold);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.loading-horas p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Responsive para horas */
+@media (max-width: 768px) {
+  .horas-grid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+  }
+
+  .hora-btn {
+    padding: 12px 8px;
+    font-size: 14px;
+  }
 }
 
 /* BOTONES DE HORA - FORZAR ESTILOS */
