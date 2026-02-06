@@ -37,9 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (fecha.getDay() === 0) { // 0 = Domingo
       alert('Lo sentimos, no trabajamos los domingos. Por favor selecciona otro día.');
       e.target.value = '';
+      fechaActual = '';
     } else {
       fechaActual = e.target.value;
-      cargarHorasDisponibles(); // Actualizar horas cuando cambia la fecha
+      cargarHorasDisponibles();
     }
   });
   
@@ -47,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const selectServicio = document.getElementById('servicio');
   selectServicio.addEventListener('change', (e) => {
     servicioActual = e.target.value;
-    cargarHorasDisponibles(); // Actualizar horas según duración del servicio
+    cargarHorasDisponibles();
   });
 });
 
@@ -74,6 +75,14 @@ function abrirModal(barbero) {
   form.style.display = 'block';
   mensajeExito.style.display = 'none';
   
+  // IMPORTANTE: Deshabilitar botón al abrir modal
+  const btnConfirmar = document.querySelector('.btn-confirmar');
+  btnConfirmar.disabled = true;
+  
+  // Resetear variables
+  servicioActual = '';
+  fechaActual = '';
+  
   // Resetear horas disponibles
   mostrarMensajeHoras('Selecciona un servicio y una fecha para ver las horas disponibles');
 }
@@ -84,14 +93,19 @@ function abrirModal(barbero) {
 async function cargarHorasDisponibles() {
   // Validar que estén seleccionados servicio y fecha
   if (!servicioActual || !fechaActual || !barberoActual) {
+    const btnConfirmar = document.querySelector('.btn-confirmar');
+    if (btnConfirmar) btnConfirmar.disabled = true;
     return;
   }
   
   const contenedorHoras = document.getElementById('horasDisponibles');
   mostrarCargando();
   
+  // Deshabilitar botón mientras carga
+  const btnConfirmar = document.querySelector('.btn-confirmar');
+  if (btnConfirmar) btnConfirmar.disabled = true;
+  
   try {
-    // Llamar a Apps Script para obtener horas disponibles
     const response = await fetch(`${CONFIG.webAppURL}?action=obtenerHoras&barbero=${encodeURIComponent(CONFIG.barberos[barberoActual])}&fecha=${fechaActual}&servicio=${encodeURIComponent(servicioActual)}`);
     
     const resultado = await response.json();
@@ -157,7 +171,13 @@ function seleccionarHora(hora, btn) {
   document.getElementById('hora').value = hora;
   
   // Habilitar botón de confirmar
-  document.querySelector('.btn-confirmar').disabled = false;
+  const btnConfirmar = document.querySelector('.btn-confirmar');
+  if (btnConfirmar) {
+    btnConfirmar.disabled = false;
+  }
+  
+  console.log('✅ Hora seleccionada:', hora);
+  console.log('✅ Botón habilitado');
 }
 
 // ========================================
@@ -170,6 +190,11 @@ function cerrarModal() {
   mensajeExito.style.display = 'none';
   servicioActual = '';
   fechaActual = '';
+  barberoActual = '';
+  
+  // Deshabilitar botón al cerrar
+  const btnConfirmar = document.querySelector('.btn-confirmar');
+  if (btnConfirmar) btnConfirmar.disabled = true;
 }
 
 // Cerrar al hacer click en X
@@ -195,6 +220,8 @@ document.addEventListener('keydown', (e) => {
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   
+  console.log('📝 Formulario enviado');
+  
   // Obtener datos del formulario
   const datos = {
     barbero: document.getElementById('barberoSeleccionado').value,
@@ -206,9 +233,12 @@ form.addEventListener('submit', async (e) => {
     comentarios: document.getElementById('comentarios').value
   };
   
+  console.log('📊 Datos del formulario:', datos);
+  
   // Validar que todos los campos requeridos estén llenos
   if (!datos.nombre || !datos.email || !datos.fecha || !datos.hora || !datos.servicio) {
     alert('Por favor completa todos los campos obligatorios (*)');
+    console.log('❌ Validación fallida - Campos faltantes');
     return;
   }
   
@@ -217,6 +247,8 @@ form.addEventListener('submit', async (e) => {
   const textoOriginal = btnConfirmar.innerHTML;
   btnConfirmar.disabled = true;
   btnConfirmar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+  
+  console.log('⏳ Enviando datos a Apps Script...');
   
   try {
     // ENVIAR DATOS A GOOGLE SHEETS VIA APPS SCRIPT
@@ -229,22 +261,25 @@ form.addEventListener('submit', async (e) => {
       body: JSON.stringify(datos)
     });
     
+    console.log('📡 Respuesta recibida');
+    
     const resultado = await response.json();
     
+    console.log('📄 Resultado:', resultado);
+    
     if (resultado.exito) {
-      // Mostrar mensaje de éxito
+      console.log('✅ Reserva exitosa');
       mostrarExito();
     } else {
-      // Mostrar mensaje de error
+      console.log('❌ Error en reserva:', resultado.mensaje);
       alert('❌ ' + resultado.mensaje);
       btnConfirmar.disabled = false;
       btnConfirmar.innerHTML = textoOriginal;
     }
     
   } catch (error) {
-    console.error('Error:', error);
-    
-    // Asumir que funcionó (por el modo no-cors)
+    console.error('❌ Error:', error);
+    console.log('⚠️ Asumiendo éxito por error de CORS');
     mostrarExito();
   }
 });
@@ -262,8 +297,10 @@ function mostrarExito() {
   // Restaurar botón después de 3 segundos
   setTimeout(() => {
     const btnConfirmar = document.querySelector('.btn-confirmar');
-    btnConfirmar.disabled = false;
-    btnConfirmar.innerHTML = '<i class="fas fa-check"></i> Confirmar Reserva';
+    if (btnConfirmar) {
+      btnConfirmar.disabled = true;
+      btnConfirmar.innerHTML = '<i class="fas fa-check"></i> Confirmar Reserva';
+    }
   }, 3000);
 }
 
