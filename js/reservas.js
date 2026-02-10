@@ -162,16 +162,28 @@ function abrirModal(barbero) {
 // CERRAR MODAL
 // ========================================
 function cerrarModal() {
-  console.log('🔒 Cerrando modal');
-  
   modal.style.display = 'none';
   document.body.style.overflow = 'auto';
   form.reset();
   mensajeExito.style.display = 'none';
-  contenedorFormulario.style.display = 'block';
-  servicioActual = '';
-  fechaActual = '';
 }
+
+// Cerrar al hacer click en X
+document.querySelector('.modal-close').addEventListener('click', cerrarModal);
+
+// Cerrar al hacer click fuera del modal
+window.addEventListener('click', (e) => {
+  if (e.target === modal) {
+    cerrarModal();
+  }
+});
+
+// Cerrar con tecla ESC
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && modal.style.display === 'block') {
+    cerrarModal();
+  }
+});
 
 // ========================================
 // CARGAR HORAS DISPONIBLES
