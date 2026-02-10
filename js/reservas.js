@@ -157,8 +157,9 @@ function abrirModal(barbero) {
 function cerrarModal() {
   modal.style.display = 'none';
   document.body.style.overflow = 'auto';
-  mensajeExito.style.display = 'none';
   contenedorFormulario.style.display = 'block';
+  document.getElementById('contenedorExito').style.display = 'none';
+  
   form.reset();
   
 }
@@ -411,7 +412,8 @@ function mostrarExito() {
   void mensajeExito.offsetHeight;
 
   // MOSTRAR MENSAJE DE ÉXITO
-  mensajeExito.style.display = 'block';
+  document.getElementById('contenedorExito').style.display = 'block';
+  contenedorFormulario.style.display = 'none';
   console.log('  ✓ Mensaje de éxito mostrado');
   
   // Verificar cambios

@@ -792,6 +792,15 @@ body {
   flex-direction: column;
 }
 
+#contenedorExito{
+  display: none;
+  min-height: 350px;
+}
+
+#mensajeExxito {
+  display: block;
+}
+
 /* ========================================
    INFORMACIÓN DE RESERVAS
    ======================================== */
