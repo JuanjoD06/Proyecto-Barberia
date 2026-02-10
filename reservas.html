@@ -6,22 +6,15 @@
   <meta name="description" content="Reserva tu cita en Oroz Barber - Elige tu barbero y agenda tu cita">
   <title>Reservar Cita - Oroz Barber</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cinzel:wght@400;600;700&family=Inter:wght@200;300;400;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- CSS -->
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/reservas.css">
 </head>
 <body>
 
-  <!-- Header -->
   <header class="header-reservas">
     <div class="header-overlay"></div>
     <div class="header-content">
@@ -33,7 +26,6 @@
     </div>
   </header>
 
-  <!-- Información adicional -->
   <div class="info-reservas">
     <div class="info-card-reserva">
       <i class="fas fa-clock"></i>
@@ -42,14 +34,12 @@
       <p>Viernes - Sábado: 8:00 AM - 12:00 PM | 2:00 PM - 10:00 PM</p>
       <p class="nota">Domingos cerrado</p>
     </div>
-    
     <div class="info-card-reserva">
       <i class="fas fa-info-circle"></i>
       <h4>Importante</h4>
       <p>Debes agendar con mínimo <strong>3 horas</strong> de anticipación</p>
       <p class="nota">Cancelaciones hasta 1 hora antes</p>
     </div>
-    
     <div class="info-card-reserva">
       <i class="fas fa-envelope"></i>
       <h4>Confirmación</h4>
@@ -58,13 +48,10 @@
     </div>
   </div>
 
-  <!-- Sección de Barberos -->
   <section class="barberos-section">
     <div class="container">
-      
       <div class="barberos-grid">
         
-        <!-- Barbero 1 -->
         <div class="barbero-card" data-barbero="barbero1">
           <div class="barbero-imagen">
             <img src="assets/images/barbero1.jpg" alt="Felipe Orozco">
@@ -77,19 +64,12 @@
             <h3 class="barbero-nombre">Felipe Orozco</h3>
             <p class="barbero-titulo">Barbero Senior</p>
             <div class="barbero-stats">
-              <div class="stat-item">
-                <i class="fas fa-star"></i>
-                <span>8 años exp.</span>
-              </div>
-              <div class="stat-item">
-                <i class="fas fa-scissors"></i>
-                <span>(Pipe)</span>
-              </div>
+              <div class="stat-item"><i class="fas fa-star"></i><span>8 años exp.</span></div>
+              <div class="stat-item"><i class="fas fa-scissors"></i><span>(Pipe)</span></div>
             </div>
           </div>
         </div>
 
-        <!-- Barbero 2 -->
         <div class="barbero-card" data-barbero="barbero2">
           <div class="barbero-imagen">
             <img src="assets/images/barbero1.jpg" alt="Tomas Orozco">
@@ -102,19 +82,12 @@
             <h3 class="barbero-nombre">Tomas Orozco</h3>
             <p class="barbero-titulo">Barbero Profesional</p>
             <div class="barbero-stats">
-              <div class="stat-item">
-                <i class="fas fa-star"></i>
-                <span>5 años exp.</span>
-              </div>
-              <div class="stat-item">
-                <i class="fas fa-scissors"></i>
-                <span>(Chinga)</span>
-              </div>
+              <div class="stat-item"><i class="fas fa-star"></i><span>5 años exp.</span></div>
+              <div class="stat-item"><i class="fas fa-scissors"></i><span>(Chinga)</span></div>
             </div>
           </div>
         </div>
 
-        <!-- Barbero 3 -->
         <div class="barbero-card" data-barbero="barbero3">
           <div class="barbero-imagen">
             <img src="assets/images/barbero1.jpg" alt="Sergio Jiménez">
@@ -127,14 +100,8 @@
             <h3 class="barbero-nombre">Sergio Jiménez</h3>
             <p class="barbero-titulo">Barbero Profesional</p>
             <div class="barbero-stats">
-              <div class="stat-item">
-                <i class="fas fa-star"></i>
-                <span>6 años exp.</span>
-              </div>
-              <div class="stat-item">
-                <i class="fas fa-scissors"></i>
-                <span>(Checho)</span>
-              </div>
+              <div class="stat-item"><i class="fas fa-star"></i><span>6 años exp.</span></div>
+              <div class="stat-item"><i class="fas fa-scissors"></i><span>(Checho)</span></div>
             </div>
           </div>
         </div>
@@ -143,12 +110,12 @@
     </div>
   </section>
 
-  <!-- Modal de Reserva -->
+  <!-- MODAL -->
   <div id="reservaModal" class="modal">
     <div class="modal-content">
       <button class="modal-close">&times;</button>
       
-      <!-- CONTENEDOR DEL FORMULARIO (se oculta completo) -->
+      <!-- FORMULARIO CON HEADER -->
       <div id="contenedorFormulario">
         <div class="modal-header">
           <h2>Reserva con <span id="barberoNombre"></span></h2>
@@ -156,21 +123,16 @@
         </div>
 
         <form id="reservaForm" class="reserva-form">
-          
-          <!-- Campo oculto para el barbero -->
           <input type="hidden" id="barberoSeleccionado" name="barbero">
 
-          <!-- Información Personal -->
           <div class="form-section">
             <h3><i class="fas fa-user"></i> Información Personal</h3>
-            
             <div class="form-row">
               <div class="form-group full-width">
                 <label for="nombre">Nombre Completo *</label>
                 <input type="text" id="nombre" name="nombre" required>
               </div>
             </div>
-
             <div class="form-row">
               <div class="form-group full-width">
                 <label for="email">Email *</label>
@@ -179,10 +141,8 @@
             </div>
           </div>
 
-          <!-- Detalles de la Cita -->
           <div class="form-section">
             <h3><i class="fas fa-calendar-alt"></i> Detalles de la Cita</h3>
-    
             <div class="form-row">
               <div class="form-group">
                 <label for="servicio">Servicio *</label>
@@ -201,7 +161,6 @@
               </div>
             </div>
 
-            <!-- CONTENEDOR DE HORAS DISPONIBLES -->
             <div class="form-row">
               <div class="form-group full-width">
                 <label>Hora Disponible *</label>
@@ -210,26 +169,19 @@
                     <p>Selecciona un servicio y una fecha para ver las horas disponibles</p>
                   </div>
                 </div>
-
-                <!-- Campo oculto para guardar la hora seleccionada -->
                 <input type="hidden" id="hora" name="hora" required>
               </div>
             </div>
-
           </div>
 
-          <!-- Botones -->
           <div class="form-buttons">
             <button type="button" class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
-            <button type="submit" class="btn-confirmar">
-              <i class="fas fa-check"></i> Confirmar Reserva
-            </button>
+            <button type="submit" class="btn-confirmar"><i class="fas fa-check"></i> Confirmar Reserva</button>
           </div>
-
         </form>
       </div>
 
-      <!-- Mensaje de éxito -->
+      <!-- MENSAJE DE ÉXITO -->
       <div id="mensajeExito" class="mensaje-exito" style="display: none;">
         <i class="fas fa-check-circle"></i>
         <h3>¡Reserva Confirmada!</h3>
@@ -240,10 +192,8 @@
     </div>
   </div>
 
-  <!-- JavaScript -->
   <script src="js/reservas.js"></script>
 
-  <!-- Footer -->
   <footer class="footer-simple">
     <div class="footer-bottom">
       <p>&copy; 2026 Oroz Barber. Todos los derechos reservados.</p>
