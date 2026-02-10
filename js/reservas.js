@@ -158,20 +158,6 @@ function abrirModal(barbero) {
   console.log('✅ Modal abierto correctamente');
 }
 
-// ========================================
-// CERRAR MODAL
-// ========================================
-function cerrarModal() {
-  console.log('🔒 Cerrando modal');
-  
-  modal.style.display = 'none';
-  document.body.style.overflow = 'auto';
-  form.reset();
-  mensajeExito.style.display = 'none';
-  contenedorFormulario.style.display = 'block';
-  servicioActual = '';
-  fechaActual = '';
-}
 
 // ========================================
 // CARGAR HORAS DISPONIBLES
