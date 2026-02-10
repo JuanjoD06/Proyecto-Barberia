@@ -776,6 +776,14 @@ body {
   box-shadow: 0 8px 20px rgba(218, 165, 32, 0.4);
 }
 
+#mensajeExito {
+  display: none;
+}
+
+.modal-content {
+  overflow-y: auto;
+}
+
 /* ========================================
    INFORMACIÓN DE RESERVAS
    ======================================== */

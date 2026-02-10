@@ -112,14 +112,7 @@ function configurarModal() {
   if (btnCerrar) {
     btnCerrar.addEventListener('click', cerrarModal);
   }
-  
-  // Cerrar al hacer click fuera del modal
-  window.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      cerrarModal();
-    }
-  });
-  
+   
   // Cerrar con tecla ESC
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modal.style.display === 'block') {
@@ -164,8 +157,10 @@ function abrirModal(barbero) {
 function cerrarModal() {
   modal.style.display = 'none';
   document.body.style.overflow = 'auto';
-  form.reset();
   mensajeExito.style.display = 'none';
+  contenedorFormulario.style.display = 'block';
+  form.reset();
+  
 }
 
 // Cerrar al hacer click en X
