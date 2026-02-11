@@ -375,11 +375,10 @@ function mostrarExito() {
   
   // Forzar reflow del navegador
   void mensajeExito.offsetHeight;
-  mensajeExito.style.display = 'block';
+  
 
   // MOSTRAR MENSAJE DE ÉXITO
-  document.getElementById('contenedorExito').style.display = 'block';
-  contenedorFormulario.style.display = 'none';
+  mensajeExito.style.display = 'block';
   console.log('  ✓ Mensaje de éxito mostrado');
   
   // Verificar cambios
