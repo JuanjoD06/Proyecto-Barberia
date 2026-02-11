@@ -158,7 +158,7 @@ function cerrarModal() {
   modal.style.display = 'none';
   document.body.style.overflow = 'auto';
   contenedorFormulario.style.display = 'block';
-  document.getElementById('contenedorExito').style.display = 'none';
+  mensajeExito.style.display = 'none';
   
   form.reset();
   
@@ -410,6 +410,7 @@ function mostrarExito() {
   
   // Forzar reflow del navegador
   void mensajeExito.offsetHeight;
+  mensajeExito.style.display = 'block';
 
   // MOSTRAR MENSAJE DE ÉXITO
   document.getElementById('contenedorExito').style.display = 'block';
