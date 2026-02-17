@@ -68,7 +68,15 @@ function configurarFecha() {
   const hoy = new Date().toISOString().split('T')[0];
   inputFecha.setAttribute('min', hoy);
   
+   // Abrir calendario al hacer click en cualquier parte =====
+  inputFecha.addEventListener('click', function() {
+    if (this.showPicker) {
+      this.showPicker();
+    }
+  });
+  
   // Desactivar domingos
+  
   inputFecha.addEventListener('input', (e) => {
     const fecha = new Date(e.target.value + 'T00:00:00');
     if (fecha.getDay() === 0) {
