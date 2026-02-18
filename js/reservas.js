@@ -4,7 +4,7 @@
 // ========================================
 
 const CONFIG = {
-  webAppURL: 'https://script.google.com/macros/s/AKfycby2vu-pCmAskLsGqrr1RId3Gdmy7rtU5HRD3GzSAwTzV4OQsTsq_Vx3Npus8SR5frS6jw/exec',
+  webAppURL: 'https://script.google.com/macros/s/AKfycbwVVAXJd3WfTAKVmrOJM9Y21AYnzXSxJJPPtvOfidhYuuQzezS5rrlhepTFKLinuMJA/exec',
   
   barberos: {
     barbero1: 'Felipe Orozco',
