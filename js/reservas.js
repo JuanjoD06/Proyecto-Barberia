@@ -1,5 +1,5 @@
 const CONFIG = {
-  // ✅ MEJORA: URL ofuscada (más difícil de extraer con bots)
+  // url ofuscada
   webAppURL: atob('aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J3VlZBWEpkM1dmVEFLVm1yT0pNOVkyMUFZbnpYU3hKSlBQdHZPZmlkaFl1dVF6ZXpTNXJybGhlcFRGS0xpbnVNSkEvZXhlYw=='),
   
   barberos: {
@@ -8,7 +8,7 @@ const CONFIG = {
     barbero3: 'Sergio Jiménez'
   },
   
-  // ✅ NUEVO: Límites de seguridad
+  //Límite de intentos y tiempo de espera
   maxIntentos: 5,
   timeoutIntentos: 300000, // 5 minutos
   maxLongitudNombre: 100,
