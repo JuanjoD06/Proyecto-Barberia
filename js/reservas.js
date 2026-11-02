@@ -12,7 +12,8 @@ const CONFIG = {
   maxIntentos: 5,
   timeoutIntentos: 300000, // 5 minutos
   maxLongitudNombre: 100,
-  maxLongitudEmail: 254
+  maxLongitudEmail: 254,
+  longitudTelefono: 10
 };
 
 // ========================================
@@ -33,6 +34,13 @@ function sanitizarTexto(texto) {
 function validarEmail(email) {
   const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   return regex.test(email) && email.length <= CONFIG.maxLongitudEmail;
+}
+
+// ✅ Validar teléfono (exactamente 10 dígitos numéricos)
+function validarTelefono(telefono) {
+  if (!telefono || typeof telefono !== 'string') return false;
+  const regex = /^\d{10}$/;
+  return regex.test(telefono.trim());
 }
 
 // ✅ Validar nombre (solo letras, espacios y acentos)
@@ -182,14 +190,20 @@ document.addEventListener('DOMContentLoaded', () => {
   contenedorFormulario = document.getElementById('contenedorFormulario');
   HistorialForm.cargarSugerencias('oroz_historial_emails', 'historialEmails');
   HistorialForm.cargarSugerencias('oroz_historial_nombres', 'historialNombres');
+  HistorialForm.cargarSugerencias('oroz_historial_telefonos', 'historialTelefonos');
   const emailGuardado = localStorage.getItem('oroz_barber_email');
   const nombreGuardado = localStorage.getItem('oroz_barber_nombre');
+  const telefonoGuardado = localStorage.getItem('oroz_barber_telefono');
 
   if (emailGuardado) {
     document.getElementById('email').value = emailGuardado;
   }
   if (nombreGuardado) {
     document.getElementById('nombre').value = nombreGuardado;
+  }
+  if (telefonoGuardado && validarTelefono(telefonoGuardado)) {
+    const inputTel = document.getElementById('telefono');
+    if (inputTel) inputTel.value = telefonoGuardado;
   }
 
   if (!modal || !form || !mensajeExito || !contenedorFormulario) {
@@ -299,6 +313,18 @@ function abrirModal(barbero) {
   mensajeExito.style.display = 'none';
   
   form.reset();
+  
+  // Restaurar datos guardados del cliente
+  const emailGuardado = localStorage.getItem('oroz_barber_email');
+  const nombreGuardado = localStorage.getItem('oroz_barber_nombre');
+  const telefonoGuardado = localStorage.getItem('oroz_barber_telefono');
+  if (nombreGuardado) document.getElementById('nombre').value = nombreGuardado;
+  if (emailGuardado) document.getElementById('email').value = emailGuardado;
+  if (telefonoGuardado && validarTelefono(telefonoGuardado)) {
+    const inputTel = document.getElementById('telefono');
+    if (inputTel) inputTel.value = telefonoGuardado;
+  }
+
   servicioActual = '';
   fechaActual = '';
   
@@ -436,6 +462,14 @@ function seleccionarHora(hora, btn) {
 // CONFIGURAR FORMULARIO
 // ========================================
 function configurarFormulario() {
+  const inputTelefono = document.getElementById('telefono');
+  if (inputTelefono) {
+    // Sanitización en tiempo real: restringir estrictamente a números y máximo 10 dígitos
+    inputTelefono.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D/g, '').slice(0, CONFIG.longitudTelefono);
+    });
+  }
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     await enviarReserva();
@@ -456,7 +490,13 @@ async function enviarReserva() {
   // ✅ Recopilar y sanitizar datos
   const nombre = sanitizarTexto(document.getElementById('nombre').value);
   const email = document.getElementById('email').value.trim().toLowerCase();
+  const inputTel = document.getElementById('telefono');
+  const telefono = inputTel ? sanitizarTexto(inputTel.value).replace(/\D/g, '').slice(0, CONFIG.longitudTelefono) : '';
+  
   localStorage.setItem('oroz_barber_email', email);
+  if (telefono) {
+    localStorage.setItem('oroz_barber_telefono', telefono);
+  }
   const fecha = document.getElementById('fecha').value;
   const hora = document.getElementById('hora').value;
   const servicio = document.getElementById('servicio').value;
@@ -470,6 +510,11 @@ async function enviarReserva() {
   
   if (!validarEmail(email)) {
     mostrarError('Por favor ingresa un email válido.');
+    return;
+  }
+
+  if (!validarTelefono(telefono)) {
+    mostrarError('Por favor ingresa un número de teléfono válido (exactamente 10 dígitos numéricos).');
     return;
   }
   
@@ -493,7 +538,7 @@ async function enviarReserva() {
     return;
   }
   
-  const datos = { barbero, nombre, email, fecha, hora, servicio };
+  const datos = { barbero, nombre, email, telefono, fecha, hora, servicio };
   
   const btnConfirmar = document.querySelector('.btn-confirmar');
   const textoOriginal = btnConfirmar.innerHTML;
@@ -538,10 +583,12 @@ async function enviarReserva() {
         // 🎯 NUEVO: Guardar en historial para autocompletado futuro
       HistorialForm.guardar('oroz_historial_emails', email);
       HistorialForm.guardar('oroz_historial_nombres', nombre);
+      HistorialForm.guardar('oroz_historial_telefonos', telefono);
   
       // Mantener compatibilidad con tu código actual
       localStorage.setItem('oroz_barber_email', email);
       localStorage.setItem('oroz_barber_nombre', nombre);
+      localStorage.setItem('oroz_barber_telefono', telefono);
       mostrarExito();
     } else {
       mostrarError(resultado.mensaje || 'Error al agendar la cita.');
